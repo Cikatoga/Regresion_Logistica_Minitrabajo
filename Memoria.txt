@@ -1,0 +1,155 @@
+##1
+
+El siguiente proyecto, es un pequeño EDA con regresión líneal y aplicación de la función Sigmoide.
+ 
+¿Cuál es el objetivo del siguiente proyecto?
+Analizaré si el cliente abandonará el banco, lo cual es una variable dicotómica. Y la regresión líneal no es adecuada ya que intentaría predecir valores continuos. 
+
+¿Porqué no podría resolverlo con regresión líneal?
+Tendría tres problemas base, los cuales no me permitirían tener información correcta, estos serían: 
+- Predicciones sin sentido: ya que la regresión líneal es infita. Y en la vida real, o en este caso la probabilidad es 1 o 0, o sea, sí o no. 
+- La forma de la relación: En la regresión líneal se asume que el cambio es constante. Pero en el marketing no. 
+- Heterocedasticidad: Los errores de una regresión líneas con datos binarios no se distribuyen de forma normal. 
+
+¿Qué interpretación práctica tiene estimar una probabilidad en este contexto?
+Viéndolo desde un punto de vista de Marketing. Ayuda a ver en qué páis hay más retención del cliente, en qué país es más probable que el cliente abandone el servicio. 
+Se pueden crear alertas, para saber si un cliente se irá, el presupuesto se puede estimar de una mejor manera el público objetivo. 
+
+##2
+
+La variable de esde estudio es exited, lo que representa el estado de permanencia del cliente. 
+
+¿Cuántas clases existen? Tiene, 2 clases o sea un modelo binario.
+Clase 0: Si el cliente permanece (No churn)
+Clase 1: Si el cliente cierra su cuenta, abandono (Churn)
+
+¿Existe un orden natural?
+No, no existe un orden. Es una variable de naturaleza categórica nominal. 
+
+Corresponde utilizar una regresión logística binaria. Porque se representa si el cliente se queda o se va, con un 0 y 1. Si tuviera más opciones me hubiera queda muy bien el One-vs-Rest pero ya que solo hay dos clases, no sería útil.
+
+##3
+
+EDA
+
+##4
+
+La función sigmoide en la función logística que fue mi traductor, ya que lo convierte en un valor dentro de un rango manejable y comprensible.
+La regresión calcula la puntuación basada en la edad, salario, y el saldo del cliente. Por lo tanto la función sigmoide toma la puntuación y la transforma en una probabilidad.
+
+¿Porqué está acotada entre 0 y 1? Es debido a su estructura asintótica. Esto quiere decir que por mucho que pueda llegar a crecer un valor de entrada, el resultaod de la función se acercará a 1. Pero nunca lo superará. 
+
+Algo importante es que matemáticamente es indispensable porqeu una probabilidad por definición, no puede ser menor al 0% ni mayor al 100%.
+
+Como en todo estudio que se hace es necesario saber el porqué está pasando algo, para poder actuar a tiempo y poder saber qué pasos tomar para evitar tener perdidas monetarias grandes, que al final del día es la base que impulsa todo negocio. 
+
+¿Qué significa el signo de coeficiente?
+En este caso indica la dirección de la relación. 
+Signo positivo (+): al aumentar la variable x, también aumenta la probabilidad de que el cliente se vaya por variable y. 
+Signo negativo (-): al aumentar la variable x, disminuye la probabilidad de abadono o y. O sea, un cliente más leal a nuestra empresa.
+
+¿Qué representa su magnitud? el cambio en el logaritmo de los "odds". 
+A mayor valor absoluto del coeficiente (∣β∣), más fuerte es el impacto de esa variable en la decisión final del modelo.
+
+Sin embargo, para que esta magnitud tenga sentido práctico en marketing, solemos aplicar la función exponencial (e 
+β) para obtener el Odds Ratio.
+
+¿Por qué no se interpretan igual que en regresión lineal?
+
+En la regresión lineal, el coeficiente es la "pendiente": si X sube 1, Y sube exactamente β. Es una relación constante y directa.
+
+Sin embargo, en la regresión logística no pudemos decir eso ya que:
+- La relación no es líneal
+- Escala logarítmica
+
+
+¿Odds, qué són? En una forma más sencilla de explicar son las posibilidades o momios. O sea, la probabilidad de que un evento ocurra y la que otro no.
+
+Ahora bien, Odds ratio es el cociente entre dos Odds, dicho de otra forma se usa para comparar cómo cambia el riesgro entre dos grupos diferentes.
+
+##5 
+
+Luego de realizar una verificación de la data, no encontré valores faltantes. El data set que descargué venía limpio. 
+
+Según tengo entendido normalmente los datos "outliers" se eliman, pero en mi caso que me estoy enfocando en Marketing, es de los datos más importantes, más que todo para conocer el patrón de los clientes que abandonan el banco.
+
+¿Qué es un outlier en el contexto de regresión logistica? Sería el dato que se aleja del resto. y eso hace un cambio radical en la media por ejempolo. 
+¿Cómo pueden afectar el modelo? La regresión logística es más robusto que la líneal, por los sigmoides. 
+- Desplazamiento de la curva: Un outlier muy lejano puede hacer que la curva sea poco preciso.
+- Inestabilidad de los coeficientes: Podría inflar o cambiar lo valores. 
+- Sesgo de probabilidad: Por un dato, podría asumirse que los mismo que tenga las cualidades se podría marcar un patrón. 
+
+¿Se deben eliminar o conservar?
+En mi punto de vista siempre es necesario mantenerlos, ya que sabremos que persona no está dando su data o cuánta data no es fiable y al no estar afectar los resultados. 
+
+¿Cómo se codifico? Creo, que esta fue mi parte favorita al revisar la raw data. Organizar la data, por ejemplo por ubicación geográfica, por género, edad, generación, etc. 
+
+La forma que se codífico fue, "Female/mujer" como 0 y "Male/hombre" como 1. 
+
+## 6
+
+## 7
+Si P(Abandono)≥0.5: el modelo clasificará al cliente como "abandono" con los código binairos que usé anteriormente = 1
+Si P(Abandono)<0.5: el modelo clasificará al cliente como fiel, o sea "Se queda" con los código binarios asignados anteriormente sería = 0
+
+Por lo que he ido leyendo gracias a la IA, es que el umbral 0.5 es el punto donde el modelo considera que es igual de probable que algo pase o no. En otras palabras es el punto de equilibrio. 
+
+¿Cuándo NO es adecuado el umbral 0.5?
+Como deja una probabilidad del 50% - 50% no siempre es bueno. 
+
+Costes asimétricos: En este caso puntualmente no es lo mismo molestar a un cliente fiel con una oferta que perder a un cliente que de igual manera se iba a ir. Siempre, el costo de perder a un clientte será más alto. 
+Datasets desbalanceados: como el porcentaje de abandono es bajo el modelo puede predecir probabilidades bajas para casi todos. Y con el 0.5% podría marcar que ningún cliente se iría. 
+
+¿Qué es más costoso un Falso Positivo o un Falso Negativo? 
+En este caso en concreto el FN es más costoso que el FP. 
+- FN (Costo Alto): El modelo predice que el cliente se queda y no se hace ninguna maniobra de retención, por lo cual el cliente abandonará la entidad y se llevará sus activos. 
+- FP (Costo bajo): El modelo precide que el cliente se va, pero no tiene intención. El gasto que incurre en llamarle o una tasa preferencial es menor a perder un cliente por completo. 
+
+El costo de FN es superior, el banco podría priorizar la capacidad de detectar a los posibles clientes qeu realmente se van, o que lo están pensando con certeza. 
+Si mantenemos un umbral de 0.5 dejaríamos escapar muchos clientes en riesgo de irse. 
+
+Por ende el umbral propuesta sería de 0.2 o 0.3 
+¿Por qué? 
+Retención: El modelo dará nuevas alertas de clientes "en riesgo" a cualquiera que tenga al menos un 20% o 30% de probabilidad de irse. Por lo cual se podrá actuar de manera efectiva.
+Balance económico: Es más rentable ofrecer una pequeña promoción extra a clientes leales. Que permitir que un porcentaje de clientes valiosos se vayan sin haber intentado retenerlos. 
+
+## 8
+
+¿Qué es la matriz de confusión?
+Es una herramienta que permite visualizar el desempeño del algoritmo de clasificación. Compara las predicciones del modelo frente a los valores del dataset. 
+
+Cuadrantes:
+- Verdadero Negativo: Los que el modelo predijo una acción y efectivamente pasó. 
+- Verdadero Positivo: Los que el modelo predijo que se irían, y se fueron.
+- Falsos Positivos: El modelo los marcó como en riesgo de abandono pero son leales.
+- Falso Negativo: el error más crítico, ya que se predijo que se quedarían pero abandonan.
+
+TN: Ahora en la práctica tuvimos 1540 clientes que se quedaron lo cual se predijo y se muestra un modelo sólido. 
+TP: el modelo logró encontrar 76 clientes que si abandonaron
+FP: Se obtuvo una falsa alarma para 53 clientes
+FN: Este es el punto de inflección, ya que 331 clientes se esperaba que se quedaran pero se fueron. 
+
+## 9
+
+En las graficas anteriores, se separaron los clientes. 
+En el histograma muestra la distribución de probabiliddes que el modelo asignó a cada cliente. 
+Curva ROC y AUC: resume que tan exacto o bueno fue el modelo que utlicé. 
+
+## 10
+
+Siendo honesta, me guié de la IA para que me fuera explicando el paso a paso, sin embargo, me recuera a trabajos qeu he realizado anteriormente. El modelo, que cree fue para conocer el abandono de los clientes y parcialmente me dio un resultado verídico. El modelo ayudó a identificar los patrones clave del abandono. Y se logró un AUC de 0.77
+
+¿Qué limitaciones tiene? 
+Ya que hay más clientes que se quedaron (que es lo bueno), hubo un desvalance y predice más facilmente a los que se quedarán que a los que se irán que es el punto clave.
+
+La regresión logística asume relaciones lineales.
+
+Algo que noté y también consulté con la IA es que no tuve datos sobre la satisfacción, para crear una retención. También, no tenía esa variable así que sería algo bueno de reforzar al momento de captar la data.
+
+¿Qué mejoraría con más tiempo?
+Crearía una variable de satisfacción del cliente, para poder predecir más fácilmente el que esté dispuesto a irse.
+Estudiaría más la regresión lineal para solo guiarme en código y poder hacerlo en python por mi cuenta. 
+Haría un dashboard en powerBI para darle una visibillidad más sencilla
+
+¿Confiaría en este modelo?
+A ver, sí y no. Lo haría con el del 0.3% ya que deja más información o un pareto de 80-20.
